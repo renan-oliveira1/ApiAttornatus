@@ -7,7 +7,6 @@ import com.example.ApiAttornatus.entities.Address;
 import com.example.ApiAttornatus.entities.People;
 import com.example.ApiAttornatus.repositories.AddressRepository;
 import com.example.ApiAttornatus.repositories.PeopleRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,19 +52,19 @@ public class PeopleService {
         return peoples.stream().map(x -> new PeopleDTO(x)).collect(Collectors.toList());
     }
 
-    public People findOne(Long id){
+    public PeopleDTO findOne(Long id){
         People peopleExists = peopleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("People with ID-" + id +" not found!!"));
-        return peopleExists;
+        return new PeopleDTO(peopleExists);
     }
 
-    public People update(Long id, People people){
+    public PeopleDTO update(Long id, People people){
         try{
             People peopleExists = peopleRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("People with ID-" + id +" not found!!"));
 
             People updatedPeople = peopleRepository.save(people);
-            return updatedPeople;
+            return new PeopleDTO(updatedPeople);
         }catch (Exception e){
             throw new RuntimeException("Error to update people!!");
         }
@@ -82,15 +81,6 @@ public class PeopleService {
         }catch (Exception e){
             throw new RuntimeException("Error to delete people!!");
         }
-    }
-
-
-    private People toModel(PeopleDTO dto){
-        People peopleEntity = new People();
-        peopleEntity.setName(dto.getName());
-        peopleEntity.setBirthDate(dto.getBirthDate());
-
-        return peopleEntity;
     }
 
 

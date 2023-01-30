@@ -1,5 +1,6 @@
 package com.example.ApiAttornatus.controller;
 
+import com.example.ApiAttornatus.dto.MessageResponseDTO;
 import com.example.ApiAttornatus.dto.PeopleDTO;
 import com.example.ApiAttornatus.entities.People;
 import com.example.ApiAttornatus.services.PeopleService;
@@ -34,7 +35,15 @@ public class PeopleController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public People findOne(@PathVariable Long id){
+    public PeopleDTO findOne(@PathVariable Long id){
         return peopleService.findOne(id);
     }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public PeopleDTO update(@RequestBody People people){return peopleService.update(people.getId(), people);}
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public MessageResponseDTO delete(@PathVariable Long id){return  peopleService.delete(id);}
 }

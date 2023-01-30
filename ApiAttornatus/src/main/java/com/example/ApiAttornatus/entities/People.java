@@ -22,7 +22,7 @@ public class People {
 
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "people")
+    @OneToMany(mappedBy = "people", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> address =  new ArrayList<>();
 
     public void setId(Long id) {
