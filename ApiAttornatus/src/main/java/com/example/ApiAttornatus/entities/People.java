@@ -11,10 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class People {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +25,35 @@ public class People {
     @OneToMany(mappedBy = "people")
     private List<Address> address =  new ArrayList<>();
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public List<Address> getAddress() {
+        return address;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setAddress(List<Address> address) {
+        this.address = address;
+    }
 }
