@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,6 +35,18 @@ public class Address {
     @ManyToOne
     @JoinColumn(name = "people_id")
     private People people;
+
+    public Address() {
+    }
+
+    public Address(Long id, String place, String cep, String number, String city, boolean isMainAddress) {
+        this.id = id;
+        this.place = place;
+        this.cep = cep;
+        this.number = number;
+        this.city = city;
+        this.isMainAddress = isMainAddress;
+    }
 
     public Long getId() {
         return id;
@@ -89,5 +103,18 @@ public class Address {
 
     public void setPeople(People people) {
         this.people = people;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return isMainAddress == address.isMainAddress && Objects.equals(id, address.id) && place.equals(address.place) && cep.equals(address.cep) && number.equals(address.number) && city.equals(address.city) && people.equals(address.people);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, place, cep, number, city, isMainAddress, people);
     }
 }

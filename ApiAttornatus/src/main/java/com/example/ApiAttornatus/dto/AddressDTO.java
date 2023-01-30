@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
 
 
 public class AddressDTO {
@@ -111,5 +112,18 @@ public class AddressDTO {
 
     public void setPeople(String people) {
         this.people = people;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AddressDTO that = (AddressDTO) o;
+        return isMainAddress == that.isMainAddress && Objects.equals(id, that.id) && place.equals(that.place) && cep.equals(that.cep) && number.equals(that.number) && city.equals(that.city) && people.equals(that.people);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, place, cep, number, city, isMainAddress, people);
     }
 }

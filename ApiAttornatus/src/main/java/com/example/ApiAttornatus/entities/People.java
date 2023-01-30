@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @AllArgsConstructor
@@ -22,7 +23,16 @@ public class People {
 
     private LocalDate birthDate;
 
+    public People(Long id, String name, LocalDate birthDate) {
+        this.id = id;
+        this.name = name;
+        this.birthDate = birthDate;
+    }
+
     @OneToMany(mappedBy = "people", cascade = CascadeType.ALL, orphanRemoval = true)
+
+
+
     private List<Address> address =  new ArrayList<>();
 
     public void setId(Long id) {
@@ -55,5 +65,18 @@ public class People {
 
     public void setAddress(List<Address> address) {
         this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        People people = (People) o;
+        return Objects.equals(id, people.id) && name.equals(people.name) && birthDate.equals(people.birthDate) && Objects.equals(address, people.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, birthDate, address);
     }
 }

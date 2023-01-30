@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class PeopleDTO {
@@ -65,5 +66,18 @@ public class PeopleDTO {
 
     public void setAddresses(List<AddressDTO> addresses) {
         this.addresses = addresses;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PeopleDTO peopleDTO = (PeopleDTO) o;
+        return Objects.equals(id, peopleDTO.id) && name.equals(peopleDTO.name) && birthDate.equals(peopleDTO.birthDate) && Objects.equals(addresses, peopleDTO.addresses);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, birthDate, addresses);
     }
 }
